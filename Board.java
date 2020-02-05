@@ -1,4 +1,4 @@
-public class Board {
+public class Board implements IBoard{
     protected String name;
     char[][] navire;
     boolean[][] frappe;
@@ -93,5 +93,57 @@ public class Board {
             if (frappe[i][navire[0].length-1]==false)  System.out.println(".");
             else System.out.println("x");
         }
+    }
+
+    public int getSize() {
+        return navire.length * navire[0].length;
+    }
+
+    public void putShip(AbstractShip ship, int x, int y) {
+        if (x<0 || x>=navire.length || y<0 || y>navire[0].length) {
+            System.out.println("Error, can't place the ship.");
+            return;
+        }
+        int x_local=x, y_local=y;
+        switch (ship.orientation) {
+            case SOUTH:
+                while(x_local<navire.length) {
+                    navire[x_local][y_local] = ship.label;
+                    x_local += 1;
+                }
+                break;
+            case NORTH:
+                while(x_local>=0) {
+                    navire[x_local][y_local] = ship.label;
+                    x_local -= 1;
+                }
+                break;
+            case WEST:
+                while(y_local>=0) {
+                    navire[x_local][y_local] = ship.label;
+                    y_local -= 1;
+                }
+                break;
+            default: // EAST
+                while(y_local<navire[0].length) {
+                    navire[x_local][y_local] = ship.label;
+                    y_local += 1;
+                }
+                break;
+        }
+    }
+    public boolean hasShip(int x, int y) {
+        if (navire[x][y]!='.') return true;
+        else return false;
+    }
+
+    // ????
+    public void setHit(boolean hit, int x, int y) { 
+        if (navire[x][y]!='.') hit = true;
+        else hit = false;
+    }
+
+    public Boolean getHit(int x, int y) {
+        return frappe[x][y];
     }
 }
