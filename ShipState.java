@@ -30,7 +30,7 @@ public class ShipState {
 	
 	
 	public  AbstractShip getship() {
-		ship.name= toString();
+		// ship.name= toString();
 		if(isSunk())
 			System.out.println("It is sunk");
 		return ship;
