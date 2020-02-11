@@ -4,7 +4,6 @@
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class TestBoard {
     public static void main(String[] args) {
         // Q2()；
@@ -16,7 +15,7 @@ public class TestBoard {
 
     public static void Q2() {
         Board B2 = new Board("B2");
-        B2.setNavire('D', 2, 2);
+        // B2.setNavire('D', 2, 2);
         B2.setFrappe(true, 1, 1);
         B2.print();
     }

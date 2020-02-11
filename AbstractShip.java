@@ -3,12 +3,14 @@ public abstract class AbstractShip {
     protected String name;
     protected int taille;
     protected Orientation orientation;
+    protected int count_strike;
 
     public AbstractShip(char l, String n, int t, Orientation o) {
         this.label = l; 
         this.name = n;
         this.taille = t;
         this.orientation = o;
+        this.count_strike = 0;
     }
 
     public char getLabel() {
@@ -41,6 +43,14 @@ public abstract class AbstractShip {
 
     public void setOrientation(Orientation o) {
         this.orientation = o;
+    }
+
+    public int getCountStrike() {
+        return count_strike;
+    }
+
+    public void addStrike() {
+        count_strike ++;
     }
  
     public void print() {

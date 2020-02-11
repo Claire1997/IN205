@@ -2,11 +2,28 @@
 public class ShipState {
 	public AbstractShip ship;
 	public boolean struck;
-	protected int count_strike;
+	// protected int count_strike;
+
+	public ShipState() {
+		this.ship = null;
+		this.struck = false;
+	}
+
+	public ShipState(AbstractShip s) {
+		this.ship = s;
+		this.struck = false;
+	}
+
+	public ShipState(AbstractShip s, boolean st) {
+		this.ship = s;
+		this.struck = st;
+	}
 	
 	public void addStrike() {
-		struck=true;
-		count_strike++;
+		if (ship.count_strike<ship.getTaille()){
+			struck=true;
+			ship.addStrike();;
+		}
 	}
 	
 	public boolean isStruck() {
@@ -22,12 +39,11 @@ public class ShipState {
 	}
 	
 	public boolean isSunk() {
-		if(count_strike>=ship.taille)
+		if(ship.count_strike>=ship.taille)
 			return true;
 		else
 			return false;
 	}
-	
 	
 	public  AbstractShip getship() {
 		// ship.name= toString();
