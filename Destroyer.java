@@ -4,6 +4,6 @@ public class Destroyer extends AbstractShip {
     }
 
     public Destroyer() {
-        super('D', "Destroyer", 2, EAST);
+        super('D', "Destroyer", 2, Orientation.EAST);
     }
 }

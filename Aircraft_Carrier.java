@@ -4,6 +4,6 @@ public class Aircraft_Carrier extends AbstractShip {
     }
 
     public Aircraft_Carrier() {
-        super('C', "Aircraft-Carrier", 5, EAST);
+        super('C', "Aircraft-Carrier", 5, Orientation.EAST);
     }
 }

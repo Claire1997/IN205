@@ -43,4 +43,10 @@ public abstract class AbstractShip {
         this.orientation = o;
     }
  
+    public void print() {
+        System.out.println("Ship" + label);
+        System.out.println("Name" + label);
+        System.out.println("Size" + taille);
+        System.out.println("Orientation" + orientation);
+    }
 }

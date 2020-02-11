@@ -33,18 +33,35 @@ public class Player {
 
         do {
             AbstractShip s = ships[i];
-            String msg = String.format("placer %d : %s(%d)", i + 1, s.getName(), s.getLength());
+            String msg = String.format("placer %d : %s(%d)", i + 1, s.getName(), s.getTaille());
             System.out.println(msg);
             InputHelper.ShipInput res = InputHelper.readShipInput();
             // TODO set ship orientation
-            if(res!=null)
-            	s.setOrientation=res.orientation;
+            if(res!=null){
+                Orientation o = Orientation.EAST;
+                switch (res.orientation) {
+                    case "n":
+                        o = Orientation.NORTH;
+                        break;
+                    case "s":
+                        o = Orientation.SOUTH;
+                        break;
+                    case "w":
+                        o = Orientation.WEST;
+                        break;
+                    case "e":
+                        o = Orientation.EAST;
+                        break;
+                }
+                s.setOrientation(o);
+            }
             else
             	i--;
             // TODO put ship at given position
             if(res!=null) {
-            	if(!putShip(s,res.x,res.y)) {
-            		System.out.println("Surpassez la limitation de position!")
+            	if(!board.putShip(s,res.x,res.y)) {
+                    System.out.println("Surpass the limit of position! Change the position or the orientation.");
+                    s.print();
             		i--;
             	}
             }
@@ -57,7 +74,7 @@ public class Player {
     }
 
     public Hit sendHit(int[] coords) {
-        boolean done;
+        boolean done = true;
         Hit hit = null;
 
         do {

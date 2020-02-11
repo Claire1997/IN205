@@ -42,8 +42,8 @@ public final class InputHelper {
                     String coord = in[0];
                     if (Arrays.asList(validOrientations).contains(in[1])) {
                         res.orientation = in[1];
-                        res.x = coord.charAt(0) - 'a';
-                        res.y = Integer.parseInt(coord.substring(1, coord.length())) - 1;
+                        res.y = coord.charAt(0) - 'a';
+                        res.x = Integer.parseInt(coord.substring(1, coord.length())) - 1;
                         done = true;
                     }
                 }
