@@ -4,6 +4,6 @@ public class BattleShip extends AbstractShip {
     }
 
     public BattleShip() {
-        super('B', "BattleShip", 4, EAST);
+        super('B', "BattleShip", 4, Orientation.EAST);
     }
 }

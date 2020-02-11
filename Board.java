@@ -99,38 +99,90 @@ public class Board implements IBoard{
         return navire.length * navire[0].length;
     }
 
-    public void putShip(AbstractShip ship, int x, int y) {
+    public boolean  putShip(AbstractShip ship, int x, int y) {
         if (x<0 || x>=navire.length || y<0 || y>navire[0].length) {
-            System.out.println("Error, can't place the ship.");
-            return;
+            System.out.println("Error, ship is not on the battlefield.");
+            return false;
         }
         int x_local=x, y_local=y;
         switch (ship.orientation) {
-            case SOUTH:
-                while(x_local<navire.length) {
-                    navire[x_local][y_local] = ship.label;
+            case NORTH:
+                if (x+ship.taille>=navire.length) {
+                    System.out.println("Error, ship is not on the battlefield.");
+                    return false;
+                }
+                for (int i=0; i<ship.taille; i++) {
+                    x_local = x + i;
+                    if (navire[x_local][y_local]!='.') {
+                        System.out.println("Error, already one ship in this position.");
+                        return false;
+                    }
+                }
+                x_local = x;
+                for (int i=0; i<ship.taille; i++) {
+                    setNavire(ship.label, x_local, y_local);
                     x_local += 1;
                 }
                 break;
-            case NORTH:
-                while(x_local>=0) {
-                    navire[x_local][y_local] = ship.label;
+            
+            case SOUTH:
+                if (x-ship.taille<0) {
+                    System.out.println("Error, ship is not on the battlefield.");
+                    return false;
+                }
+                for (int i=0; i<ship.taille; i++) {
+                    x_local = x - i;
+                    if (navire[x_local][y_local]!='.') {
+                        System.out.println("Error, already one ship in this position.");
+                        return false;
+                    }
+                }
+                x_local = x;
+                for (int i=0; i<ship.taille; i++) {
+                    setNavire(ship.label, x_local, y_local);
                     x_local -= 1;
                 }
                 break;
+
             case WEST:
-                while(y_local>=0) {
-                    navire[x_local][y_local] = ship.label;
-                    y_local -= 1;
+                if (y+ship.taille>=navire[0].length) {
+                    System.out.println("Error, ship is not on the battlefield.");
+                    return false;
                 }
-                break;
-            default: // EAST
-                while(y_local<navire[0].length) {
-                    navire[x_local][y_local] = ship.label;
+                for (int i=0; i<ship.taille; i++) {
+                    y_local = y + i;
+                    if (navire[x_local][y_local]!='.') {
+                        System.out.println("Error, already one ship in this position.");
+                        return false;
+                    }
+                }
+                y_local = y;
+                for (int i=0; i<ship.taille; i++) {
+                    setNavire(ship.label, x_local, y_local);
                     y_local += 1;
                 }
                 break;
+
+            default: // EAST
+                if (y-ship.taille<0) {
+                    System.out.println("Error, ship is not on the battlefield.");
+                    return false;
+                }
+                for (int i=0; i<ship.taille; i++) {
+                    y_local = y - i;
+                    if (navire[x_local][y_local]!='.') {
+                        System.out.println("Error, already one ship in this position.");
+                        return false;
+                    }
+                }
+                y_local = y;
+                for (int i=0; i<ship.taille; i++) {
+                    setNavire(ship.label, x_local, y_local);
+                    y_local -= 1;
+                }
+                break;
         }
+        return true;
     }
     public boolean hasShip(int x, int y) {
         if (navire[x][y]!='.') return true;
@@ -139,8 +191,7 @@ public class Board implements IBoard{
 
     // ????
     public void setHit(boolean hit, int x, int y) { 
-        if (navire[x][y]!='.') hit = true;
-        else hit = false;
+       frappe[x][y] = hit;
     }
 
     public Boolean getHit(int x, int y) {
