@@ -1,7 +1,7 @@
 
 public class ShipState {
-	public AbstractShip ship;
-	public boolean struck;
+	protected AbstractShip ship;
+	protected boolean struck;
 	// protected int count_strike;
 
 	public ShipState() {
@@ -45,10 +45,11 @@ public class ShipState {
 			return false;
 	}
 	
-	public  AbstractShip getship() {
+	public  AbstractShip getShip() {
 		// ship.name= toString();
-		if(isSunk())
+		/* if(isSunk())
 			System.out.println("It is sunk");
+		*/
 		return ship;
 	}
 	

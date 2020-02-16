@@ -1,7 +1,7 @@
 public class Board implements IBoard{
     protected String name;
-    ShipState[][] navire;
-    Boolean[][] frappe;
+    protected ShipState[][] navire;
+    protected Boolean[][] frappe;
     
     public Board(String n, int h, int w) {
         this.name = n;
@@ -68,9 +68,11 @@ public class Board implements IBoard{
             System.out.print(" ");
             if (i<9) System.out.print(" ");
             for (int j=0; j<navire[0].length-1; j++) {
-                System.out.print(navire[i][j].ship.label + " ");
+                if (getNavire(i, j)!=null) System.out.print(getNavire(i,j).getShip().getLabel() + " ");
+                else System.out.print(". ");
             }
-            System.out.println(navire[i][navire[0].length-1].ship.label);
+            if (getNavire(i, navire[0].length-1)!=null) System.out.println(navire[i][navire[0].length-1].getShip().getLabel());
+            else System.out.println(".");
         }
 
         System.out.println("Frappes :");
@@ -92,9 +94,9 @@ public class Board implements IBoard{
                 else System.out.print(ColorUtil.colorize("X",ColorUtil.Color.RED));
                 System.out.print(" ");
             }
-            if (frappe[i][navire[0].length-1]==null) System.out.print(".");
-            else if (frappe[i][navire[0].length-1]==null) System.out.print(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
-            else System.out.print(ColorUtil.colorize("X",ColorUtil.Color.RED));
+            if (frappe[i][navire[0].length-1]==null) System.out.println(".");
+            else if (frappe[i][navire[0].length-1]==null) System.out.println(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
+            else System.out.println(ColorUtil.colorize("X",ColorUtil.Color.RED));
         }
     }
 
@@ -117,7 +119,7 @@ public class Board implements IBoard{
                 }
                 for (int i=0; i<ship.taille; i++) {
                     x_local = x + i;
-                    if (navire[x_local][y_local].ship!=null) {
+                    if (getNavire(x_local, y_local)!=null) {
                         System.out.println("Error, already one ship in this position.");
                         return false;
                     }
@@ -136,7 +138,7 @@ public class Board implements IBoard{
                 }
                 for (int i=0; i<ship.taille; i++) {
                     x_local = x - i;
-                    if (navire[x_local][y_local].ship!=null) {
+                    if (getNavire(x_local, y_local)!=null) {
                         System.out.println("Error, already one ship in this position.");
                         return false;
                     }
@@ -155,7 +157,7 @@ public class Board implements IBoard{
                 }
                 for (int i=0; i<ship.taille; i++) {
                     y_local = y + i;
-                    if (navire[x_local][y_local].ship!=null) {
+                    if (getNavire(x_local, y_local)!=null) {
                         System.out.println("Error, already one ship in this position.");
                         return false;
                     }
@@ -174,7 +176,7 @@ public class Board implements IBoard{
                 }
                 for (int i=0; i<ship.taille; i++) {
                     y_local = y - i;
-                    if (navire[x_local][y_local].ship!=null) {
+                    if (getNavire(x_local, y_local)!=null) {
                         System.out.println("Error, already one ship in this position.");
                         return false;
                     }
@@ -189,7 +191,8 @@ public class Board implements IBoard{
         return true;
     }
     public boolean hasShip(int x, int y) {
-        if (navire[x][y].ship!=null) return true;
+        if (navire[x][y].getShip().isSunk()) return false;
+        if (navire[x][y].getShip()!=null) return true; 
         else return false;
     }
 
@@ -199,5 +202,23 @@ public class Board implements IBoard{
 
     public Boolean getHit(int x, int y) {
         return frappe[x][y];
+    }
+
+    public Hit sendHit(int x, int y) {
+        if (navire[x][y]==null) {
+            frappe[x][y] = false;
+            return Hit.MISS;
+        }
+        else if (navire[x][y].getShip().count_strike+1==navire[x][y].getShip().taille && !navire[x][y].getShip().isSunk() && frappe[x][y]==null) {
+            frappe[x][y] = true; 
+            navire[x][y].getShip().addStrike();
+            return Hit.fromInt(navire[x][y].getShip().getTaille());
+        }
+        else if (frappe[x][y]==null) {
+            frappe[x][y] = true;
+            navire[x][y].getShip().addStrike();
+            return Hit.STRUCK;
+        }
+        else return Hit.STRUCK;
     }
 }

@@ -59,4 +59,10 @@ public abstract class AbstractShip {
         System.out.println("Size" + taille);
         System.out.println("Orientation" + orientation);
     }
+
+    public boolean isSunk() {
+        if (count_strike==taille) return true;
+        else return false;
+    }
+
 }
