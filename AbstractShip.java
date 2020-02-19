@@ -2,7 +2,7 @@ public abstract class AbstractShip {
     protected char label;
     protected String name;
     protected int taille;
-    protected Orientation orientation;
+    static protected Orientation orientation;
     protected int count_strike;
 
     public AbstractShip(char l, String n, int t, Orientation o) {
