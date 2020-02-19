@@ -101,7 +101,8 @@ public class Board implements IBoard{
     }
 
     public int getSize() {
-        return navire.length * navire[0].length;
+        //return navire.length * navire[0].length;
+    	return navire.length;
     }
 
     public boolean putShip(AbstractShip ship, int x, int y) {
@@ -191,9 +192,13 @@ public class Board implements IBoard{
         return true;
     }
     public boolean hasShip(int x, int y) {
-        if (navire[x][y].getShip().isSunk()) return false;
-        if (navire[x][y].getShip()!=null) return true; 
-        else return false;
+    	if(navire[x][y]!=null) {
+    		if (navire[x][y].getShip().isSunk()) return false;
+    		if (navire[x][y].getShip()!=null) return true; 
+    		else return false;
+    	}
+    	else
+    		return false;       
     }
 
     public void setHit(boolean hit, int x, int y) { 
