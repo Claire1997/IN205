@@ -13,14 +13,21 @@ public class BattleShipsAI implements Serializable {
     private final int size;
 
     /**
+     * un compteur pour le nombre de navires d¨¦truits.
+     */
+    public int CountDestory;
+    
+    /**
      * My board. My ships have to be put on this one.
      */
-    private final IBoard board;
+    //private final IBoard board;
+    protected IBoard board;
 
     /**
      * My opponent's board. My hits go on this one to strike his ships.
      */
-    private final IBoard opponent;
+    //private final IBoard opponent;
+    protected IBoard opponent;
 
     /**
      * Coords of last known strike. Would be a good idea to target next hits around
@@ -47,6 +54,7 @@ public class BattleShipsAI implements Serializable {
         this.board = myBoard;
         this.opponent = opponentBoard;
         size = board.getSize();
+        CountDestory=0; 
     }
 
     /*
@@ -60,24 +68,30 @@ public class BattleShipsAI implements Serializable {
      */
     public void putShips(AbstractShip ships[]) {
         int x, y, n;
-        AbstractShip.Orientation o;
         Random rnd = new Random();
-        //AbstractShip.Orientation[] orientations = AbstractShip.Orientation.values();
+        //AbstractShip.orientation orientations = AbstractShip.orientation.values();
+        EnumSet<Orientation> subset;
 
         for (AbstractShip s : ships) {
             do {
                 // TODO use Random to pick a random x, y & orientation
-            	x=rnd.nextInt(9);
-            	n=rnd.nextInt(3);
-            	y=rnd.nextInt(9);
+            	x=rnd.nextInt(10);
+            	n=rnd.nextInt(4);
+            	y=rnd.nextInt(10);
+            	System.out.printf("%c%d ",y+'A',x+1);
             	switch (n) {
-            		case 1: s.setOrientation("SOUTH");break;
-            		case 2: s.setOrientation("EAST");break;
-            		case 3: s.setOrientation("WEST");break;
-            		default: s.setOrientation("NORTH");break;
+            		case 1: subset = EnumSet.of(Orientation.SOUTH);break;
+            		case 2: subset = EnumSet.of(Orientation.EAST);break;
+            		case 3: subset = EnumSet.of(Orientation.WEST);break;
+            		default:subset = EnumSet.of(Orientation.NORTH);break;
             	}
-            } while (!canPutShip(s, x, y));
-            board.putShip(s, x, y);
+            	for (Orientation o : subset) { 
+                    s.setOrientation(o);
+                    System.out.println(s.orientation);
+                }
+            //} while (!(canPutShip(s, x, y)&&board.putShip(s, x, y)));
+            } while (!(board.putShip(s, x, y)));
+            //board.putShip(s, x, y);
         }
     }
 
@@ -142,34 +156,37 @@ public class BattleShipsAI implements Serializable {
      */
 
     private boolean canPutShip(AbstractShip ship, int x, int y) {
-        AbstractShip.Orientation o = ship.getOrientation();
+        Orientation o = ship.getOrientation();
         int dx = 0, dy = 0;
-        if (o == AbstractShip.Orientation.EAST) {
-            if (x + ship.getLength() >= this.size) {
+        if (o == AbstractShip.orientation.NORTH) {
+            if (x + ship.getTaille() >= this.size) {
                 return false;
             }
             dx = 1;
-        } else if (o == AbstractShip.Orientation.SOUTH) {
-            if (y + ship.getLength() >= this.size) {
+        } else if (o == AbstractShip.orientation.WEST) {
+            if (y + ship.getTaille() >= this.size) {
                 return false;
             }
             dy = 1;
-        } else if (o == AbstractShip.Orientation.NORTH) {
-            if (y + 1 - ship.getLength() < 0) {
+        } else if (o == AbstractShip.orientation.EAST) {
+            if (y + 1 - ship.getTaille() < 0) {
                 return false;
             }
             dy = -1;
-        } else if (o == AbstractShip.Orientation.WEST) {
-            if (x + 1 - ship.getLength() < 0) {
+        } else if (o == AbstractShip.orientation.SOUTH) {
+            if (x + 1 - ship.getTaille() < 0) {
                 return false;
             }
             dx = -1;
         }
-
         int ix = x;
         int iy = y;
 
-        for (int i = 0; i < ship.getLength(); ++i) {
+        for (int i = 0; i < ship.getTaille(); ++i) {
+        	if((ix<0)||(ix>=size))
+        		return false;
+        	if((iy<0)||(iy>=size))
+        		return false;
             if (board.hasShip(ix, iy)) {
                 return false;
             }
