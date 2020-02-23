@@ -21,18 +21,20 @@ public class TestGame {
 		int[] coords = {0,0};
         
         ai.putShips(ships);
-        int count_destory = 0;
         for(int i = 0;(i<B1.getSize())&&(ai.CountDestory<shipList.size());i++) {
         	for(int j=0;(j<B1.getSize())&&(ai.CountDestory<shipList.size());j++) {
         		ai.sendHit(coords);
-                coords[0]=i;
-                coords[1]=j;
+                coords=ai.pickRandomCoord();
                 ai.CountDestory=0;
                 for(int k = 0;k<shipList.size();k++) {
                 	if(ships[k].isSunk())
                 		ai.CountDestory++;
                 }
         	}
+        	if(ai.CountDestory==shipList.size()) {
+            	System.out.println("success");
+            	break;
+            }
         }
         
         B1.print();

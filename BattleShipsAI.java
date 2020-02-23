@@ -205,7 +205,7 @@ public class BattleShipsAI implements Serializable {
         return x >= 0 && x < size && y >= 0 && y < size && board.getHit(x, y) == null;
     }
 
-    private int[] pickRandomCoord() {
+    public int[] pickRandomCoord() {
         Random rnd = new Random();
         int x;
         int y;
@@ -217,6 +217,7 @@ public class BattleShipsAI implements Serializable {
 
         return new int[] { x, y };
     }
+    
 
     /**
      * pick a coord verically around last known strike
