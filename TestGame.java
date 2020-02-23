@@ -24,7 +24,7 @@ public class TestGame {
         for(int i = 0;(i<B1.getSize())&&(ai.CountDestory<shipList.size());i++) {
         	for(int j=0;(j<B1.getSize())&&(ai.CountDestory<shipList.size());j++) {
         		ai.sendHit(coords);
-                coords=ai.pickRandomCoord();
+                coords=ai.randomHit();
                 ai.CountDestory=0;
                 for(int k = 0;k<shipList.size();k++) {
                 	if(ships[k].isSunk())

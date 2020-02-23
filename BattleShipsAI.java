@@ -18,6 +18,11 @@ public class BattleShipsAI implements Serializable {
     public int CountDestory;
     
     /**
+     * une liste pour les hits.
+     */
+    protected ArrayList<int[]> recordHit = new ArrayList <int[]> ();
+    
+    /**
      * My board. My ships have to be put on this one.
      */
     //private final IBoard board;
@@ -75,9 +80,9 @@ public class BattleShipsAI implements Serializable {
         for (AbstractShip s : ships) {
             do {
                 // TODO use Random to pick a random x, y & orientation
-            	x=rnd.nextInt(10);
+            	x=rnd.nextInt(size);
             	n=rnd.nextInt(4);
-            	y=rnd.nextInt(10);
+            	y=rnd.nextInt(size);
             	System.out.printf("%c%d ",y+'A',x+1);
             	switch (n) {
             		case 1: subset = EnumSet.of(Orientation.SOUTH);break;
@@ -209,11 +214,31 @@ public class BattleShipsAI implements Serializable {
         Random rnd = new Random();
         int x;
         int y;
+        int[] coords = {0,0};
 
         do {
             x = rnd.nextInt(size);
             y = rnd.nextInt(size);
-        } while (!isUndiscovered(x, y));
+            coords[0]=x;
+            coords[1]=y;
+        } while ((!isUndiscovered(x, y)));
+
+        return new int[] { x, y };
+    }
+    
+    public int[] randomHit() {
+    	Random rnd = new Random();
+        int x;
+        int y;
+        int[] coords = {0,0};
+
+        do {
+            x = rnd.nextInt(size);
+            y = rnd.nextInt(size);
+            coords[0]=x;
+            coords[1]=y;
+        } while ((!recordHit.contains(coords))&&(!isUndiscovered(x, y)));
+        recordHit.add(coords);
 
         return new int[] { x, y };
     }
