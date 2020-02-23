@@ -22,6 +22,10 @@ public interface IBoard {
      */
     boolean hasShip(int x, int y);
 
+    ShipState getNavire(int i, int j);
+
+    Boolean getFrappe(int i, int j);
+
     /**
      * Set the state of the hit at a given position
      * @param hit true if the hit must be set to successful

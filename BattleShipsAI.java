@@ -92,7 +92,7 @@ public class BattleShipsAI implements Serializable {
             	}
             	for (Orientation o : subset) { 
                     s.setOrientation(o);
-                    System.out.println(s.orientation);
+                    // System.out.println(s.orientation);
                 }
             //} while (!(canPutShip(s, x, y)&&board.putShip(s, x, y)));
             } while (!(board.putShip(s, x, y)));
@@ -142,7 +142,7 @@ public class BattleShipsAI implements Serializable {
         }
 
         Hit hit = opponent.sendHit(res[0], res[1]);
-        board.setHit(hit != Hit.MISS, res[0], res[1]);
+        // board.setHit(hit != Hit.MISS, res[0], res[1]);
 
         if (hit != Hit.MISS) {
             if (lastStrike != null) {
@@ -276,5 +276,13 @@ public class BattleShipsAI implements Serializable {
             }
         }
         return null;
+    }
+
+    IBoard getBoard() {
+        return board;
+    }
+
+    IBoard getOpponent() {
+        return opponent;
     }
 }

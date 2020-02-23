@@ -6,6 +6,7 @@ public class AIPlayer extends Player {
      * ** Attribut
      */
     private BattleShipsAI ai;
+    public AbstractShip[] ship;
 
     /*
      * ** Constructeur
@@ -19,16 +20,17 @@ public class AIPlayer extends Player {
     // instead.
     
     public void putship(List<AbstractShip> ships) {
-        AbstractShip[] ship = ships.toArray(new AbstractShip[0]);
+        ship = ships.toArray(new AbstractShip[0]);
         ai.putShips(ship);
     }
     
-    public Boolean success(List<AbstractShip> myShips,List<AbstractShip> otherShips) {
+    public Boolean success(List<AbstractShip> myShips, List<AbstractShip> otherShips) {
     	AbstractShip[] ship1 = myShips.toArray(new AbstractShip[0]);
     	AbstractShip[] ship2 = otherShips.toArray(new AbstractShip[0]);
-    	int restShips;
+    	int restShips = myShips.size();
     	
-    	ai.CountDestory=0;
+        ai.CountDestory=0;
+        System.out.println("rest " + restShips + "destroy" + ai.CountDestory);
     	restShips=myShips.size();
         for(int k = 0;k<otherShips.size();k++) {
         	if(ship2[k].isSunk())
@@ -46,7 +48,33 @@ public class AIPlayer extends Player {
     	}
     	else {
     		return null;
-    	}
+        }
+        
+        /*boolean rest = false;
+        boolean destroy = true;
+
+        for (int i=0; i<ai.board.getSize(); i++) {
+            for (int j=0; j<ai.board.getSize(); j++) {
+                if (ai.getBoard().getNavire(i,j)!=null && ai.getBoard().getFrappe(i,j)==null) {
+                    rest = true;
+                    break;
+                }
+            }
+            if (rest==true) break;
+        }
+        for (int i=0; i<ai.opponent.getSize(); i++) {
+            for (int j=0; j<ai.opponent.getSize(); j++) {
+                if (ai.getOpponent().getNavire(i,j)!=null && ai.getOpponent().getFrappe(i,j)==null) {
+                    destroy = false;
+                    break;
+                }
+            }
+            if (destroy==false) break;
+        }
+        if (rest&&destroy) return true;
+        else if ((!rest)&&(!destroy)) return false;
+        else return null;
+        */
     }
     
     public void sendHit() {

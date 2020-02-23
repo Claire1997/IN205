@@ -3,8 +3,9 @@ import java.util.List;
 
 public class TestAI {
 	public static void main(String[] args) {
-		Board B1 = new Board("B1", 10, 10);
-        Board B2 = new Board("B2", 10, 10);
+        int size_board = 10;
+		Board B1 = new Board("B1", size_board, size_board);
+        Board B2 = new Board("B2", size_board, size_board);
         Destroyer d = new Destroyer();
         Submarine s1 = new Submarine();
         Submarine s2 = new Submarine();
@@ -34,14 +35,16 @@ public class TestAI {
         AI2.putship(ships2);
         System.out.println();
         
-        //B1.print();
-        //B2.print();
-        
+        B1.print();
+        B2.print();
+        // System.out.println("FINISH");
         int count=0;
         
-        while((AI1.success(ships1, ships2)==null)||(count>=100)) {
+        while((AI1.success(ships1, ships2)==null) && (count<=100)) {
         	AI1.sendHit();
-        	AI2.sendHit();
+            AI2.sendHit();
+            B1.print();
+            B2.print();
         	count++;
         }
         B1.print();

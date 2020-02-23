@@ -52,7 +52,7 @@ public class Board implements IBoard{
     }
 
     public void print() {
-        System.out.println("Board" + name);
+        System.out.println("Board " + name);
         System.out.println("Navires :");
         System.out.print("   ");
         char c;
@@ -90,12 +90,12 @@ public class Board implements IBoard{
             if (i<9) System.out.print(" ");
             for (int j=0; j<navire[0].length-1; j++) {
                 if (frappe[i][j]==null) System.out.print(".");
-                else if (frappe[i][j]==null) System.out.print(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
+                else if (navire[i][j]==null) System.out.print(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
                 else System.out.print(ColorUtil.colorize("X",ColorUtil.Color.RED));
                 System.out.print(" ");
             }
             if (frappe[i][navire[0].length-1]==null) System.out.println(".");
-            else if (frappe[i][navire[0].length-1]==null) System.out.println(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
+            else if (navire[i][navire[0].length-1]==null) System.out.println(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
             else System.out.println(ColorUtil.colorize("X",ColorUtil.Color.RED));
         }
     }
