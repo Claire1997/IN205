@@ -41,6 +41,7 @@ public class TestAI {
         int count=0;
         
         while((AI1.success(ships1, ships2)==null) && (count<=100)) {
+            System.out.println("count" + count);
         	AI1.sendHit();
             AI2.sendHit();
             B1.print();

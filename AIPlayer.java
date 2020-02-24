@@ -24,7 +24,7 @@ public class AIPlayer extends Player {
         ai.putShips(ship);
     }
     
-    public Boolean success(List<AbstractShip> myShips, List<AbstractShip> otherShips) {
+    public Boolean success(List<AbstractShip> myShips, List<AbstractShip> otherShips) { // ????变量没有根据环境变化了！！
     	AbstractShip[] ship1 = myShips.toArray(new AbstractShip[0]);
     	AbstractShip[] ship2 = otherShips.toArray(new AbstractShip[0]);
     	int restShips = myShips.size();
@@ -80,7 +80,9 @@ public class AIPlayer extends Player {
     public void sendHit() {
     	int[] coords = {0,0};
     	
-    	coords=ai.pickRandomCoord();        
+        coords=ai.pickRandomCoord();  
+        System.out.println(coords[0]);    
+        System.out.println(coords[1]);     
         ai.sendHit(coords);
         //return coords;
     }

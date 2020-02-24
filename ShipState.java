@@ -20,7 +20,7 @@ public class ShipState {
 	}
 	
 	public void addStrike() {
-		if (ship.count_strike<ship.getTaille()){
+		if (ship.getCountStrike()<ship.getTaille()){
 			struck=true;
 			ship.addStrike();;
 		}
@@ -39,7 +39,7 @@ public class ShipState {
 	}
 	
 	public boolean isSunk() {
-		if(ship.count_strike>=ship.taille)
+		if(ship.getCountStrike()>=ship.getTaille())
 			return true;
 		else
 			return false;

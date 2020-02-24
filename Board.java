@@ -214,7 +214,7 @@ public class Board implements IBoard{
             frappe[x][y] = false;
             return Hit.MISS;
         }
-        else if (navire[x][y].getShip().count_strike+1==navire[x][y].getShip().taille && !navire[x][y].getShip().isSunk() && frappe[x][y]==null) {
+        else if (navire[x][y].getShip().getCountStrike()+1==navire[x][y].getShip().getTaille() && !navire[x][y].getShip().isSunk() && frappe[x][y]==null) {
             frappe[x][y] = true; 
             navire[x][y].getShip().addStrike();
             return Hit.fromInt(navire[x][y].getShip().getTaille());
