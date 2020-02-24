@@ -29,13 +29,40 @@ public class Game {
             System.out.println("entre ton nom:");
 
             // TODO use a scanner to read player name
-
+            String name_player = sin.next();
             // TODO init boards
-            Board b1, b2;
-
+            Board B1, B2;
+            B1 = new Board("B1", 10, 10);
+            B2 = new Board("B2", 10, 10);
+            Destroyer d1 = new Destroyer();
+            Submarine s1 = new Submarine();
+            Submarine s2 = new Submarine();
+            BattleShip b1 = new BattleShip();
+            Aircraft_Carrier a1 = new Aircraft_Carrier();
+            Destroyer d2 = new Destroyer();
+            Submarine s3 = new Submarine();
+            Destroyer d3 = new Destroyer();
+            BattleShip b2 = new BattleShip();
+            Aircraft_Carrier a2 = new Aircraft_Carrier();
+        
+            List<AbstractShip> ships1 = new ArrayList<AbstractShip>();
+            ships1.add(d1);
+            ships1.add(s1);
+            ships1.add(s2);
+            ships1.add(b1);
+            ships1.add(a1);
+        
+            List<AbstractShip> ships2 = new ArrayList<AbstractShip>();
+            ships2.add(a2);
+            ships2.add(s3);
+            ships2.add(d3);
+            ships2.add(b2);
+            ships2.add(d2);
             // TODO init this.player1 & this.player2
-
-            b1.print();
+            player1 = new Player(B1, B2, ships1);
+            player2 = new Player(B2, B1, ships2);
+            B1.print();
+            B2.print();
             // place player ships
             player1.putShips();
             player2.putShips();
@@ -56,6 +83,10 @@ public class Game {
         boolean done;
         do {
             hit = Hit.MISS; // TODO player1 send a hit
+            System.out.println("Player 1, please enter the coordinates of your hit:");
+            coords[0] = sin.next();
+            coords[1] = sin.next();
+            hit = player1.sendHit(coords);
             boolean strike = hit != Hit.MISS; // TODO set this hit on his board (b1)
 
             done = updateScore();
@@ -67,7 +98,10 @@ public class Game {
             if (!done && !strike) {
                 do {
                     hit = Hit.MISS; // TODO player2 send a hit.
-
+                    System.out.println("Player 2, please enter the coordinates of your hit:");
+                    coords[0] = sin.next();
+                    coords[1] = sin.next();
+                    hit = player1.sendHit(coords);
                     strike = hit != Hit.MISS;
                     if (strike) {
                         b1.print();

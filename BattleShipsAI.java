@@ -13,7 +13,7 @@ public class BattleShipsAI implements Serializable {
     private final int size;
 
     /**
-     * un compteur pour le nombre de navires d¨¦truits.
+     * un compteur pour le nombre de navires dï¿½ï¿½truits.
      */
     public int CountDestory;
     
@@ -165,22 +165,22 @@ public class BattleShipsAI implements Serializable {
     private boolean canPutShip(AbstractShip ship, int x, int y) {
         Orientation o = ship.getOrientation();
         int dx = 0, dy = 0;
-        if (o == AbstractShip.orientation.NORTH) {
+        if (o == Orientation.NORTH) {
             if (x + ship.getTaille() >= this.size) {
                 return false;
             }
             dx = 1;
-        } else if (o == AbstractShip.orientation.WEST) {
+        } else if (o == Orientation.WEST) {
             if (y + ship.getTaille() >= this.size) {
                 return false;
             }
             dy = 1;
-        } else if (o == AbstractShip.orientation.EAST) {
+        } else if (o == Orientation.EAST) {
             if (y + 1 - ship.getTaille() < 0) {
                 return false;
             }
             dy = -1;
-        } else if (o == AbstractShip.orientation.SOUTH) {
+        } else if (o == Orientation.SOUTH) {
             if (x + 1 - ship.getTaille() < 0) {
                 return false;
             }
