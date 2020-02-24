@@ -2,15 +2,18 @@ public class Board implements IBoard{
     protected String name;
     protected ShipState[][] navire;
     protected Boolean[][] frappe;
+    protected Boolean[][] recordHit;
     
     public Board(String n, int h, int w) {
         this.name = n;
         this.navire = new ShipState[h][w];
         this.frappe = new Boolean[h][w];
+        this.recordHit = new Boolean[h][w];
         for (int i=0; i<h; i++) {
             for (int j=0; j<w; j++) {
                 navire[i][j] = null;
                 frappe[i][j] = null;
+                recordHit[i][j] = null;
             }
         }
     }
@@ -19,10 +22,12 @@ public class Board implements IBoard{
         this.name = n;
         this.navire = new ShipState[10][10];
         this.frappe = new Boolean[10][10];
+        this.recordHit = new Boolean[10][10];
         for (int i=0; i<10; i++) {
             for (int j=0; j<10; j++) {
                 navire[i][j] = null;
                 frappe[i][j] = null;
+                recordHit[i][j] = null;
             }
         }
     }
@@ -52,7 +57,7 @@ public class Board implements IBoard{
     }
 
     public void print() {
-        System.out.println("Board " + name);
+        System.out.println("Board" + name);
         System.out.println("Navires :");
         System.out.print("   ");
         char c;
@@ -90,12 +95,12 @@ public class Board implements IBoard{
             if (i<9) System.out.print(" ");
             for (int j=0; j<navire[0].length-1; j++) {
                 if (frappe[i][j]==null) System.out.print(".");
-                else if (navire[i][j]==null) System.out.print(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
+                else if (frappe[i][j]==null) System.out.print(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
                 else System.out.print(ColorUtil.colorize("X",ColorUtil.Color.RED));
                 System.out.print(" ");
             }
             if (frappe[i][navire[0].length-1]==null) System.out.println(".");
-            else if (navire[i][navire[0].length-1]==null) System.out.println(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
+            else if (frappe[i][navire[0].length-1]==null) System.out.println(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
             else System.out.println(ColorUtil.colorize("X",ColorUtil.Color.RED));
         }
     }
@@ -202,11 +207,11 @@ public class Board implements IBoard{
     }
 
     public void setHit(boolean hit, int x, int y) { 
-       frappe[x][y] = hit;
+    	recordHit[x][y]  = hit;
     }
 
     public Boolean getHit(int x, int y) {
-        return frappe[x][y];
+        return recordHit[x][y];
     }
 
     public Hit sendHit(int x, int y) {
@@ -214,7 +219,7 @@ public class Board implements IBoard{
             frappe[x][y] = false;
             return Hit.MISS;
         }
-        else if (navire[x][y].getShip().getCountStrike()+1==navire[x][y].getShip().getTaille() && !navire[x][y].getShip().isSunk() && frappe[x][y]==null) {
+        else if (navire[x][y].getShip().count_strike+1==navire[x][y].getShip().taille && !navire[x][y].getShip().isSunk() && frappe[x][y]==null) {
             frappe[x][y] = true; 
             navire[x][y].getShip().addStrike();
             return Hit.fromInt(navire[x][y].getShip().getTaille());

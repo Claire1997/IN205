@@ -3,28 +3,32 @@ import java.util.List;
 
 public class TestAI {
 	public static void main(String[] args) {
-        int size_board = 10;
-		Board B1 = new Board("B1", size_board, size_board);
-        Board B2 = new Board("B2", size_board, size_board);
-        Destroyer d = new Destroyer();
+		Board B1 = new Board("B1", 10, 10);
+        Board B2 = new Board("B2", 10, 10);
+        Destroyer d1 = new Destroyer();
         Submarine s1 = new Submarine();
         Submarine s2 = new Submarine();
-        BattleShip b = new BattleShip();
-        Aircraft_Carrier a = new Aircraft_Carrier();
+        BattleShip b1 = new BattleShip();
+        Aircraft_Carrier a1 = new Aircraft_Carrier();
+        Destroyer d2 = new Destroyer();
+        Submarine s3 = new Submarine();
+        Destroyer d3 = new Destroyer();
+        BattleShip b2 = new BattleShip();
+        Aircraft_Carrier a2 = new Aircraft_Carrier();
         
         List<AbstractShip> ships1 = new ArrayList<AbstractShip>();
-        ships1.add(d);
+        ships1.add(d1);
         ships1.add(s1);
         ships1.add(s2);
-        ships1.add(b);
-        ships1.add(a);
+        ships1.add(b1);
+        ships1.add(a1);
         
         List<AbstractShip> ships2 = new ArrayList<AbstractShip>();
-        ships2.add(d);
-        ships2.add(s1);
-        ships2.add(s2);
-        ships2.add(b);
-        ships2.add(a);
+        ships2.add(a2);
+        ships2.add(s3);
+        ships2.add(d3);
+        ships2.add(b2);
+        ships2.add(d2);
         
         AIPlayer AI1 = new AIPlayer(B1,B2,ships1);
         AIPlayer AI2 = new AIPlayer(B2,B1,ships2);
@@ -35,19 +39,15 @@ public class TestAI {
         AI2.putship(ships2);
         System.out.println();
         
-        B1.print();
-        B2.print();
-        // System.out.println("FINISH");
         int count=0;
         
-        while((AI1.success(ships1, ships2)==null) && (count<=100)) {
-            System.out.println("count" + count);
+        while((AI1.success(ships1, ships2)==null)&&(count<100)) {
         	AI1.sendHit();
-            AI2.sendHit();
-            B1.print();
-            B2.print();
+        	AI2.sendHit();
         	count++;
+        	
         }
+        
         B1.print();
         B2.print();
         
@@ -57,6 +57,7 @@ public class TestAI {
         else {
         	System.out.println("AI2 success");
         }
+        
         
 	}
 
